@@ -3,10 +3,13 @@ use bevy::{
     window::{PrimaryWindow, WindowMode, WindowResolution},
 };
 
+use crate::game::cursor::CursorPlugin;
+
 pub struct WindowsSettingsPlugin;
 impl Plugin for WindowsSettingsPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(PreStartup, init_window);
+        app.add_plugins(CursorPlugin)
+            .add_systems(PreStartup, init_window);
     }
 }
 
