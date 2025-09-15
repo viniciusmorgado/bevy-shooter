@@ -1,6 +1,6 @@
 use crate::game::{
     camera_controller::{self, update_camera_controller},
-    tracer::BulletTracer,
+    tracer::{BulletTracer, TracerPlugin},
 };
 use bevy::{prelude::*, window::PrimaryWindow};
 use bevy_rapier3d::{plugin::RapierContext, prelude::QueryFilter};
@@ -9,6 +9,7 @@ pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
+        app.add_plugins(TracerPlugin);
         app.add_systems(Update, update_camera_controller);
         app.add_systems(Startup, init_player);
     }
@@ -71,6 +72,7 @@ fn update_player(
             if let Some((entity, ray_intersection)) = hit {
                 let tracer_material = StandardMaterial {
                     base_color: Color::srgb(1., 1., 0.),
+                    unlit: true,
                     ..default()
                 };
 
